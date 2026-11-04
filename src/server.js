@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { fileURLToPath } from 'node:url';
 import { calculateTotal } from './pricing.js';
 
 export function createServer() {
@@ -31,7 +32,8 @@ export function createServer() {
 }
 
 // הרצה ישירה: npm start
-if (import.meta.url === `file://${process.argv[1]}`) {
+// fileURLToPath מטפל נכון גם בנתיבים עם רווחים ועברית
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const port = Number(process.env.PORT) || 3000;
   createServer().listen(port, () => console.log(`Coffee Break API on http://localhost:${port}`));
 }
