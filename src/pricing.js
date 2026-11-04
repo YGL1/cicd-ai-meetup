@@ -9,7 +9,7 @@ export const COUPONS = {
   MEETUP25: { type: 'percent', value: 25, minSubtotal: 100 },
 };
 
-const round2 = (n) => Math.round(n * 100) / 100;
+const round2 = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
 
 /**
  * סכום ביניים לפני הנחה ומע"מ.
