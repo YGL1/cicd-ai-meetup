@@ -10,6 +10,7 @@ name: Broken CI
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
