@@ -17,10 +17,33 @@ pipeline {
             }
         }
 
-        // TODO: stage('Lint')
+        stage('Lint') {
+            steps {
+                sh 'npm run lint'
+            }
+        }
 
-        // TODO: stage('Test') + junit 'reports/junit.xml'
+        stage('Test') {
+            steps {
+                sh 'npm run test:ci'
+            }
+            post {
+                always {
+                    junit 'reports/junit.xml'
+                }
+            }
+        }
     }
 
-    // TODO: post { success { ... } failure { ... } }
+    post {
+        success {
+            echo "Build #${env.BUILD_NUMBER} passed successfully"
+        }
+        failure {
+            echo "Build #${env.BUILD_NUMBER} failed — ${env.BUILD_URL}console"
+        }
+        always {
+            cleanWs(deleteDirs: true, notFailBuild: true)
+        }
+    }
 }
